@@ -7,10 +7,29 @@ const ObjectId = mongoose.Types.ObjectId;
 // descobrir esse erro :-/
 const TransactionModel = require('../models/TransactionModel');
 
+const objectStructure = (objectReq) => {
+  const { description, value, category, yearMonthDay, type } = objectReq;
+  const dateResult = yearMonthDay.split('-');
+
+  const objectData = {
+    description,
+    value,
+    category,
+    type,
+    yearMonthDay,
+    yearMonth: `${dateResult[0]}-${dateResult[1]}`,
+    year: Number(dateResult[0]),
+    month: Number(dateResult[1]),
+    day: Number(dateResult[2]),
+  };
+  return objectData;
+};
+
 const create = async (req, res) => {
   try {
-    const transaction = new TransactionModel(req.body);
-    await transaction.save(); 
+    const data = objectStructure(req.body);
+    const newTransaction = new TransactionModel(data);
+    await newTransaction.save(); 
     res.send({ message: 'Transaction inserida com sucesso' });
   } catch (error) {
     res
@@ -19,10 +38,10 @@ const create = async (req, res) => {
   }
 };
 
-const findAll = async (req, res) => {
+const findTransactionsByPeriod = async (req, res) => {
   const period = req.query.period;
 
-  //condicao para o filtro no findAll
+  //condicao para o filtro no findTransactionsByPeriod
   if(!period) {
     res
       .status(400)
@@ -73,8 +92,8 @@ const update = async (req, res) => {
   const id = req.params.id;
 
   try {
-
-    const data = await TransactionModel.findByIdAndUpdate(id, req.body, {
+    const updateData = objectStructure(req.body);
+    const data = await TransactionModel.findByIdAndUpdate(id, updateData, {
       new: true,
     });
 
@@ -106,13 +125,13 @@ const remove = async (req, res) => {
   }
 };
 
-// const removeAll = async (req, res) => {
-//   try {
-//     await TransactionModel.deleteMany({});
-//     res.send({ message: 'Transactions excluidas com sucesso'});
-//   } catch (error) {
-//     res.status(500).send({ message: 'Erro ao excluir todas as Transactions' });
-//   }
-// };
+const removeAll = async (req, res) => {
+  try {
+    await TransactionModel.deleteMany({});
+    res.send({ message: 'Transactions excluidas com sucesso'});
+  } catch (error) {
+    res.status(500).send({ message: 'Erro ao excluir todas as Transactions' });
+  }
+};
 
-module.exports = { create, findAll, findOne, update, remove };
+module.exports = { create, findTransactionsByPeriod, findOne, update, remove, removeAll };
