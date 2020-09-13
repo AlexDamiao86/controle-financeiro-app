@@ -39,7 +39,7 @@ export default function Transaction({
     <>
       {newDay && (
         <div className="new-date">
-          <span>{`${day} de ${getDescriptionMonth(month)}`}</span>
+          <span>{`${day} de ${getDescriptionMonth(month)} de ${yearMonthDay.substring(0, 4)}`}</span>
         </div>
       )}
       <div id="card-transaction" className={classColor}>
