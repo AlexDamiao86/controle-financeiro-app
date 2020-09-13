@@ -29,6 +29,7 @@
 #card-transaction .day-card {
   margin-right: 8px;
   font-size: 1.5rem;
+  margin: 20px; 
 }
 
 #card-transaction .body-card {

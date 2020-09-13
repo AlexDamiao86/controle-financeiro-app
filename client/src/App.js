@@ -13,12 +13,9 @@ export default function App() {
   const [filterText, setFilterText] = useState('');
   const [listFilter, setListFilter] = useState([]);
   const [transactions, setTransactions] = useState([]);
-
   const [dataSelected, setDataSelected] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [isPreloader, setIsPreloader] = useState(false);
-
   const [period, setPeriod] = useState(getCurrentPeriod());
 
   useEffect(() => {
@@ -58,8 +55,6 @@ export default function App() {
   };
 
   const handlePersistData = async (formData, isEdit) => {
-    console.log(formData);
-    console.log(isEdit);
     const newTransaction = isEdit
       ? await api.update(formData)
       : await api.create(formData);

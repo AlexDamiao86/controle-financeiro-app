@@ -43,7 +43,7 @@ export default function Transaction({
         </div>
       )}
       <div id="card-transaction" className={classColor}>
-        <strong className="day-card">{day.toString().padStart(2, '0')}</strong>
+        <strong className="day-card">{day}</strong>
         <div className="body-card">
           <div className="card-description font-normal">
             <strong>{category}</strong>

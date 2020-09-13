@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
+// const ObjectId = mongoose.Types.ObjectId;
 
 // Aqui havia um erro difícil de pegar. Importei como "transactionModel",
 // com "t" minúsculo. No Windows, isso não faz diferença. Mas como no Heroku
@@ -30,7 +30,7 @@ const create = async (req, res) => {
     const data = objectStructure(req.body);
     const newTransaction = new TransactionModel(data);
     await newTransaction.save(); 
-    res.send({ message: 'Transaction inserida com sucesso' });
+    res.send(newTransaction);
   } catch (error) {
     res
       .status(500)

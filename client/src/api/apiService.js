@@ -10,7 +10,7 @@ async function getPeriodTransaction(period) {
 }
 
 async function create(data) {
-  const response = await url.post('/', data);
+  const response = await url.post('', data);
   return response.data;
 }
 
